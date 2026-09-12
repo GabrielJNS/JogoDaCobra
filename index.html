@@ -35,18 +35,25 @@ body{
 }
 .bg{
   position:fixed;inset:-30px;z-index:-2;
-  background:url('https://picsum.photos/seed/forest-mist-9/1600/900?grayscale&blur=2') center/cover no-repeat;
-  filter:brightness(.32) saturate(1.1) sepia(.15);
-  animation:slowZoom 35s ease-in-out infinite alternate;
+  background:
+    radial-gradient(ellipse 90% 70% at 50% 0%, #17331f 0%, #0e1d14 45%, #070f0b 100%);
+  animation:slowZoom 40s ease-in-out infinite alternate;
 }
-@keyframes slowZoom{from{transform:scale(1)}to{transform:scale(1.15)}}
+.bg::before{
+  content:'';position:absolute;inset:0;
+  background-image:
+    repeating-linear-gradient(112deg, rgba(255,255,255,.022) 0 2px, transparent 2px 11px),
+    repeating-linear-gradient(-64deg, rgba(0,0,0,.06) 0 3px, transparent 3px 13px);
+  opacity:.85;
+}
 .bg::after{
   content:'';position:absolute;inset:0;
   background:
-    radial-gradient(circle at 20% 15%, rgba(74,222,128,.2), transparent 45%),
-    radial-gradient(circle at 85% 85%, rgba(251,191,36,.18), transparent 45%),
+    radial-gradient(circle at 20% 15%, rgba(74,222,128,.16), transparent 45%),
+    radial-gradient(circle at 85% 85%, rgba(251,191,36,.12), transparent 45%),
     radial-gradient(circle at 50% 50%, transparent 25%, rgba(10,20,16,.82));
 }
+@keyframes slowZoom{from{transform:scale(1)}to{transform:scale(1.08)}}
 
 .app{
   width:min(100%,520px);
@@ -55,7 +62,6 @@ body{
 }
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
 
-/* HUD */
 .hud{display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:10px;}
 .stat{
   background:var(--glass);
@@ -89,7 +95,6 @@ body{
 .stat.score .value.pulse{animation:pulse .5s ease;}
 @keyframes pulse{0%{transform:scale(1)}40%{transform:scale(1.32)}100%{transform:scale(1)}}
 
-/* BOARD */
 .board-wrap{
   position:relative;
   border-radius:22px;
@@ -105,28 +110,27 @@ body{
 canvas#board{
   display:block;
   width:100%;height:auto;
-  background:url('https://picsum.photos/seed/forest-canopy-4/800/800?grayscale&blur=1') center/cover;
   touch-action:none;
 }
 
-/* HELP BUTTON */
-.help-btn{
-  position:absolute;
-  top:12px;right:12px;
+.help-btn,.sound-btn{
+  position:absolute;top:12px;
   width:38px;height:38px;
   border-radius:50%;
   background:rgba(10,20,16,.7);
-  border:1px solid rgba(251,191,36,.35);
   backdrop-filter:blur(10px);
   -webkit-backdrop-filter:blur(10px);
-  color:var(--accent-2);
-  font-family:'Bricolage Grotesque',sans-serif;
-  font-size:18px;font-weight:800;
-  cursor:pointer;
-  z-index:5;
+  cursor:pointer;z-index:5;
   display:grid;place-items:center;
   transition:all .22s cubic-bezier(.4,0,.2,1);
   box-shadow:0 4px 14px rgba(0,0,0,.4);
+}
+.help-btn{
+  right:12px;
+  border:1px solid rgba(251,191,36,.35);
+  color:var(--accent-2);
+  font-family:'Bricolage Grotesque',sans-serif;
+  font-size:18px;font-weight:800;
 }
 .help-btn:hover{
   background:rgba(251,191,36,.15);
@@ -134,8 +138,20 @@ canvas#board{
   transform:scale(1.1) rotate(8deg);
   color:#fff;
 }
+.sound-btn{
+  right:58px;
+  border:1px solid rgba(74,222,128,.35);
+  color:var(--accent);
+}
+.sound-btn svg{width:19px;height:19px;display:block;}
+.sound-btn:hover{
+  background:rgba(74,222,128,.15);
+  border-color:var(--accent);
+  transform:scale(1.1);
+  color:#fff;
+}
+.sound-btn.muted{color:var(--danger);border-color:rgba(239,68,68,.45);}
 
-/* OVERLAY */
 .overlay{
   position:absolute;inset:0;z-index:10;
   background:rgba(10,20,16,.82);
@@ -158,7 +174,6 @@ canvas#board{
 .screen.hidden{display:none;}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 
-/* MENU */
 .menu-header{text-align:center;margin-bottom:16px;}
 .menu-header .eyebrow{
   display:inline-block;
@@ -208,11 +223,13 @@ canvas#board{
 .map-card:hover::before{opacity:1;}
 .map-icon{
   width:46px;height:46px;display:grid;place-items:center;
-  font-size:26px;border-radius:13px;
+  border-radius:13px;
   background:rgba(74,222,128,.12);
   border:1px solid rgba(74,222,128,.2);
+  color:var(--accent);
   position:relative;z-index:1;
 }
+.map-icon svg{width:26px;height:26px;display:block;}
 .map-info{position:relative;z-index:1;min-width:0;}
 .map-info strong{display:block;font-size:14.5px;font-weight:700;margin-bottom:2px;}
 .map-info small{display:block;color:var(--muted);font-size:11.5px;font-weight:500;}
@@ -226,7 +243,6 @@ canvas#board{
   white-space:nowrap;
 }
 
-/* PAUSE / OVER */
 .center-screen{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;}
 .big-icon{
   width:74px;height:74px;display:grid;place-items:center;
@@ -256,7 +272,6 @@ canvas#board{
 .best-line b{color:var(--gold);font-family:'JetBrains Mono',monospace;}
 .over-buttons{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;width:100%;}
 
-/* CONTROLS */
 .controls{display:flex;gap:9px;}
 .btn{
   flex:1;
@@ -294,7 +309,6 @@ canvas#board{
 .btn.large{flex:0 0 auto;padding:12px 22px;font-size:14px;}
 .btn.ghost{background:transparent;}
 
-/* DPAD */
 .dpad{
   display:none;
   grid-template-columns:repeat(3,62px);
@@ -327,7 +341,6 @@ canvas#board{
 .dpad .d{grid-area:3/2;}
 @media (hover:none),(pointer:coarse){.dpad{display:grid;}}
 
-/* HELP MODAL */
 .help-modal{
   position:fixed;inset:0;z-index:100;
   background:rgba(10,20,16,.8);
@@ -374,8 +387,7 @@ canvas#board{
   background:rgba(74,222,128,.06);
   border-color:rgba(74,222,128,.22);
 }
-.item-emoji{
-  font-size:26px;
+.item-icon{
   width:44px;height:44px;
   display:grid;place-items:center;
   background:rgba(74,222,128,.1);
@@ -383,6 +395,7 @@ canvas#board{
   border-radius:12px;
   flex-shrink:0;
 }
+.item-icon svg{width:26px;height:26px;display:block;}
 .item-text{display:flex;flex-direction:column;gap:2px;min-width:0;}
 .item-text strong{font-size:14px;font-weight:700;}
 .item-text span{font-size:12px;color:var(--muted);font-weight:500;}
@@ -395,6 +408,8 @@ canvas#board{
   .menu-header h1{font-size:28px;}
   .dpad{grid-template-columns:repeat(3,56px);grid-template-rows:repeat(3,46px);}
   .help-btn{width:34px;height:34px;font-size:16px;}
+  .sound-btn{width:34px;height:34px;right:52px;}
+  .sound-btn svg{width:17px;height:17px;}
 }
 </style>
 </head>
@@ -419,11 +434,12 @@ canvas#board{
 
   <div class="board-wrap">
     <canvas id="board"></canvas>
+    <button class="sound-btn" id="btnSound" aria-label="Ligar ou desligar som"></button>
     <button class="help-btn" id="btnHelp" aria-label="Ajuda">?</button>
     <div class="overlay" id="overlay">
       <section class="screen" id="screenMenu">
         <div class="menu-header">
-          <span class="eyebrow">🌲 Aventura Selvagem 🌲</span>
+          <span class="eyebrow">Aventura Selvagem</span>
           <h1>Snake</h1>
           <p class="sub">Escolha um mapa e comece a caçada</p>
         </div>
@@ -506,35 +522,68 @@ canvas#board{
     <p class="help-sub">O que cada coisa faz na sua aventura</p>
     <div class="items-list">
       <div class="item-row">
-        <span class="item-emoji">🍎</span>
+        <span class="item-icon">
+          <svg viewBox="0 0 32 32">
+            <circle cx="16" cy="19.5" r="9" fill="#ef4444"/>
+            <circle cx="12.6" cy="16.4" r="3.1" fill="#ffffff" opacity=".35"/>
+            <path d="M16 11.6V7.4" stroke="#7c4a1e" stroke-width="2.4" stroke-linecap="round"/>
+            <ellipse cx="21" cy="7.6" rx="4.2" ry="2.4" fill="#22c55e" transform="rotate(-28 21 7.6)"/>
+          </svg>
+        </span>
         <div class="item-text">
           <strong>Maçã Vermelha</strong>
-          <span>+1 ponto · cobra cresce</span>
+          <span>+1 ponto · a cobra cresce</span>
         </div>
       </div>
       <div class="item-row">
-        <span class="item-emoji">⭐</span>
+        <span class="item-icon">
+          <svg viewBox="0 0 32 32">
+            <circle cx="16" cy="19.5" r="9" fill="#fbbf24"/>
+            <circle cx="12.6" cy="16.4" r="3.1" fill="#ffffff" opacity=".45"/>
+            <path d="M16 11.6V7.4" stroke="#92400e" stroke-width="2.4" stroke-linecap="round"/>
+            <ellipse cx="21" cy="7.6" rx="4.2" ry="2.4" fill="#22c55e" transform="rotate(-28 21 7.6)"/>
+            <path d="M27.5 3.5l.9 2.1 2.1.9-2.1.9-.9 2.1-.9-2.1-2.1-.9 2.1-.9z" fill="#fde68a"/>
+          </svg>
+        </span>
         <div class="item-text">
           <strong>Maçã Dourada</strong>
-          <span>+5 pontos · cobra cresce</span>
+          <span>+5 pontos · a cobra cresce</span>
         </div>
       </div>
       <div class="item-row">
-        <span class="item-emoji">🟣</span>
+        <span class="item-icon">
+          <svg viewBox="0 0 32 32">
+            <circle cx="16" cy="19.5" r="9" fill="#a855f7"/>
+            <circle cx="12.6" cy="16.4" r="3.1" fill="#ffffff" opacity=".28"/>
+            <path d="M16 11.6V7.4" stroke="#5b21b6" stroke-width="2.4" stroke-linecap="round"/>
+            <path d="M12.2 19.5h7.6" stroke="#ffffff" stroke-width="2.6" stroke-linecap="round"/>
+          </svg>
+        </span>
         <div class="item-text">
           <strong>Maçã Roxa</strong>
-          <span>−3 pontos · cobra encolhe 2</span>
+          <span>−3 pontos · a cobra encolhe 2</span>
         </div>
       </div>
       <div class="item-row">
-        <span class="item-emoji">🌀</span>
+        <span class="item-icon">
+          <svg viewBox="0 0 32 32" fill="none" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round">
+            <path d="M16 4.5a11.5 11.5 0 1 1-8.15 3.35"/>
+            <path d="M16 10.5a5.5 5.5 0 1 1-3.9 1.65"/>
+            <circle cx="16" cy="16" r="1.9" fill="#fbbf24" stroke="none"/>
+          </svg>
+        </span>
         <div class="item-text">
           <strong>Portal</strong>
           <span>Teletransporta para o portal par</span>
         </div>
       </div>
       <div class="item-row">
-        <span class="item-emoji">🚪</span>
+        <span class="item-icon">
+          <svg viewBox="0 0 32 32" fill="none" stroke="#4ade80" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 16h7"/><path d="M4 16l3.4-3.4M4 16l3.4 3.4"/>
+            <path d="M28 16h-7"/><path d="M28 16l-3.4-3.4M28 16l-3.4 3.4"/>
+          </svg>
+        </span>
         <div class="item-text">
           <strong>Túneis laterais</strong>
           <span>Saia por um lado e volte pelo outro</span>
@@ -556,10 +605,144 @@ canvas#board{
   const BONUS_CHANCE = 0.3;
   const EMPTY_ROW = '.'.repeat(COLS);
 
+
+  const ICONS = {
+    portal: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M16 4.5a11.5 11.5 0 1 1-8.15 3.35"/><path d="M16 10.5a5.5 5.5 0 1 1-3.9 1.65"/><circle cx="16" cy="16" r="1.9" fill="currentColor" stroke="none"/></svg>',
+    leaf: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M25.5 6.5C13 6.5 6.5 13 6.5 25.5c12.5 0 19-6.5 19-19z"/><path d="M6.5 25.5C11 20.5 16 15.5 22 11.5"/></svg>',
+    rock: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M6.5 23.5 9 12.5 17.5 7l8 5.5-1.5 11z"/><path d="M9 12.5 15.5 17l10-4.5"/></svg>',
+    mushroom: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M4 17.5C4 10.6 9.4 6 16 6s12 4.6 12 11.5z"/><path d="M12 17.5v6.5a4 4 0 0 0 8 0v-6.5"/></svg>'
+  };
+
+  const SOUND_ON_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h3.2L12 19V5L7.2 9H4z"/><path d="M15.4 8.6a5 5 0 0 1 0 6.8" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/><path d="M18.2 5.8a9 9 0 0 1 0 12.4" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>';
+  const SOUND_OFF_ICON = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 9v6h3.2L12 19V5L7.2 9H4z"/><path d="M16 9.6l5 4.8M21 9.6l-5 4.8" stroke="currentColor" stroke-width="1.8" fill="none" stroke-linecap="round"/></svg>';
+
+ 
+  const Sound = {
+    ctx: null,
+    master: null,
+    muted: (() => { try { return localStorage.getItem('snake_muted') === '1'; } catch (e) { return false; } })(),
+
+    init() {
+      if (this.ctx) return this.ctx;
+      const AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return null;
+      this.ctx = new AC();
+      this.master = this.ctx.createGain();
+      this.master.gain.value = 0.3;
+      this.master.connect(this.ctx.destination);
+      return this.ctx;
+    },
+
+    unlock() {
+      const c = this.init();
+      if (c && c.state === 'suspended') c.resume();
+    },
+
+    tone(o) {
+      if (this.muted) return;
+      const c = this.init();
+      if (!c) return;
+      if (c.state === 'suspended') c.resume();
+
+      const t0 = c.currentTime + (o.delay || 0);
+      const dur = Math.max(0.03, o.dur || 0.15);
+      const f0 = Math.max(20, o.f0 || 440);
+
+      const osc = c.createOscillator();
+      const g = c.createGain();
+      osc.type = o.type || 'sine';
+      osc.frequency.setValueAtTime(f0, t0);
+      if (o.f1) osc.frequency.exponentialRampToValueAtTime(Math.max(20, o.f1), t0 + dur);
+
+      const vol = o.vol == null ? 0.3 : o.vol;
+      const atk = Math.min(o.attack || 0.01, dur * 0.5);
+      g.gain.setValueAtTime(0.0001, t0);
+      g.gain.exponentialRampToValueAtTime(vol, t0 + atk);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+      osc.connect(g);
+      g.connect(this.master);
+      osc.start(t0);
+      osc.stop(t0 + dur + 0.03);
+    },
+
+    noise(o) {
+      if (this.muted) return;
+      const c = this.init();
+      if (!c) return;
+      if (c.state === 'suspended') c.resume();
+
+      const dur = o.dur || 0.3;
+      const t0 = c.currentTime + (o.delay || 0);
+      const len = Math.max(1, Math.floor(c.sampleRate * dur));
+      const buf = c.createBuffer(1, len, c.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < len; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / len);
+
+      const src = c.createBufferSource();
+      src.buffer = buf;
+
+      const flt = c.createBiquadFilter();
+      flt.type = 'bandpass';
+      flt.Q.value = o.q || 1.2;
+      flt.frequency.setValueAtTime(Math.max(20, o.f0 || 900), t0);
+      flt.frequency.exponentialRampToValueAtTime(Math.max(20, o.f1 || 200), t0 + dur);
+
+      const g = c.createGain();
+      g.gain.setValueAtTime(o.vol == null ? 0.22 : o.vol, t0);
+      g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+
+      src.connect(flt); flt.connect(g); g.connect(this.master);
+      src.start(t0);
+      src.stop(t0 + dur);
+    },
+
+    toggle() {
+      this.muted = !this.muted;
+      try { localStorage.setItem('snake_muted', this.muted ? '1' : '0'); } catch (e) {}
+      if (!this.muted) { this.unlock(); Sfx.click(); }
+      return this.muted;
+    }
+  };
+
+  const Sfx = {
+    click()  { Sound.tone({ type: 'triangle', f0: 620, f1: 420, dur: 0.055, vol: 0.13 }); },
+    eat()    {
+      Sound.tone({ type: 'triangle', f0: 620, f1: 900, dur: 0.09, vol: 0.32 });
+      Sound.tone({ type: 'triangle', f0: 980, f1: 1280, dur: 0.1, vol: 0.2, delay: 0.055 });
+    },
+    golden() {
+      [660, 880, 1180, 1560].forEach((f, i) =>
+        Sound.tone({ type: 'square', f0: f, dur: 0.1, vol: 0.11, delay: i * 0.055 }));
+      Sound.tone({ type: 'triangle', f0: 1320, f1: 1760, dur: 0.28, vol: 0.16, delay: 0.23 });
+    },
+    bad()    {
+      Sound.tone({ type: 'sawtooth', f0: 320, f1: 80, dur: 0.38, vol: 0.26 });
+      Sound.noise({ f0: 700, f1: 120, dur: 0.3, vol: 0.16 });
+    },
+    portal() {
+      Sound.noise({ f0: 380, f1: 2600, dur: 0.32, vol: 0.14, q: 1.6 });
+      Sound.tone({ type: 'sine', f0: 260, f1: 920, dur: 0.3, vol: 0.18 });
+    },
+    start()  {
+      [440, 660, 880].forEach((f, i) =>
+        Sound.tone({ type: 'triangle', f0: f, dur: 0.13, vol: 0.18, delay: i * 0.08 }));
+    },
+    pause()  { Sound.tone({ type: 'sine', f0: 520, f1: 340, dur: 0.14, vol: 0.16 }); },
+    die()    {
+      Sound.tone({ type: 'sawtooth', f0: 420, f1: 70, dur: 0.7, vol: 0.28 });
+      Sound.tone({ type: 'sine', f0: 180, f1: 50, dur: 0.8, vol: 0.22, delay: 0.05 });
+    },
+    record() {
+      [523, 659, 784, 1047, 1319].forEach((f, i) =>
+        Sound.tone({ type: 'triangle', f0: f, dur: 0.18, vol: 0.18, delay: i * 0.09 }));
+    }
+  };
+
   const MAPS = {
     portais: {
       name: 'Portais',
-      icon: '🌀',
+      icon: 'portal',
       desc: 'Paredes com buracos que se conectam.',
       wrapEnabled: false,
       layout: [
@@ -597,14 +780,14 @@ canvas#board{
     },
     livre: {
       name: 'Campo Livre',
-      icon: '🌿',
+      icon: 'leaf',
       desc: 'Sem obstáculos. Corra à vontade.',
       wrapEnabled: true,
       layout: Array.from({ length: ROWS }, () => EMPTY_ROW)
     },
     obstaculos: {
       name: 'Obstáculos',
-      icon: '🪨',
+      icon: 'rock',
       desc: 'Blocos espalhados pelo campo.',
       wrapEnabled: true,
       layout: [
@@ -632,7 +815,7 @@ canvas#board{
     },
     labirinto: {
       name: 'Labirinto',
-      icon: '🍄',
+      icon: 'mushroom',
       desc: 'Pilares por toda parte. Cuidado!',
       wrapEnabled: true,
       layout: [
@@ -676,7 +859,7 @@ canvas#board{
     finalScore: $('finalScore'), finalBest: $('finalBest'),
     overMsg: $('overMsg'), overTitle: $('overTitle'),
     btnPlay: $('btnPlay'), btnRestart: $('btnRestart'), btnMenu: $('btnMenu'),
-    helpModal: $('helpModal')
+    helpModal: $('helpModal'), btnSound: $('btnSound')
   };
 
   const G = {
@@ -693,6 +876,7 @@ canvas#board{
     bonus: null,
     score: 0,
     best: 0,
+    newRecord: false,
     status: 'menu',
     stepMs: BASE_SPEED,
     acc: 0,
@@ -818,6 +1002,7 @@ canvas#board{
     G.nextDir = { x: 1, y: 0 };
     G.grow = 0;
     G.score = 0;
+    G.newRecord = false;
     G.bonus = null;
     G.stepMs = BASE_SPEED;
     G.acc = 0;
@@ -826,6 +1011,8 @@ canvas#board{
     G.status = 'playing';
     G.best = getBest(mapKey);
     G.apple = randomFreeCell();
+    Sound.unlock();
+    Sfx.start();
     updateHUD();
     setPlayButton();
     hideOverlay();
@@ -840,6 +1027,7 @@ canvas#board{
     if (G.portals && G.portals[pKey]) {
       const dest = G.portals[pKey];
       burst(nx, ny, '#4ade80', 14);
+      Sfx.portal();
       nx = dest.x;
       ny = dest.y;
       burst(nx, ny, '#fbbf24', 14);
@@ -868,6 +1056,7 @@ canvas#board{
     G.score += 1;
     G.grow += 1;
     burst(G.apple.x, G.apple.y, '#ef4444', 12);
+    Sfx.eat();
     G.apple = randomFreeCell();
     G.stepMs = Math.max(MIN_SPEED, BASE_SPEED - G.score * ACCEL);
     if (!G.bonus && Math.random() < BONUS_CHANCE) spawnBonus();
@@ -880,11 +1069,13 @@ canvas#board{
       G.score += 5;
       G.grow += 1;
       burst(b.x, b.y, '#fbbf24', 22);
+      Sfx.golden();
     } else {
       G.score = Math.max(0, G.score - 3);
       for (let i = 0; i < 2 && G.snake.length > 3; i++) G.snake.pop();
       burst(b.x, b.y, '#a855f7', 22);
       G.shake = 8;
+      Sfx.bad();
     }
     G.bonus = null;
     updateHUD(true);
@@ -903,7 +1094,10 @@ canvas#board{
   function die() {
     G.status = 'over';
     G.shake = 14;
+    Sfx.die();
     if (G.snake.length) burst(G.snake[0].x, G.snake[0].y, '#4ade80', 30);
+
+    G.newRecord = G.score > G.best && G.score > 0;
     if (G.score > G.best) {
       G.best = G.score;
       saveBest(G.mapKey, G.best);
@@ -911,6 +1105,33 @@ canvas#board{
     updateHUD();
     setPlayButton();
     showOver();
+  }
+
+  let bgCache = null;
+
+  function drawBackground() {
+    if (!bgCache) {
+      const base = ctx.createLinearGradient(0, 0, W, H);
+      base.addColorStop(0, '#0d1c13');
+      base.addColorStop(0.5, '#0a1610');
+      base.addColorStop(1, '#060d09');
+
+      const g1 = ctx.createRadialGradient(W * 0.2, H * 0.12, 0, W * 0.2, H * 0.12, W * 0.75);
+      g1.addColorStop(0, 'rgba(74,222,128,0.09)');
+      g1.addColorStop(1, 'rgba(74,222,128,0)');
+
+      const g2 = ctx.createRadialGradient(W * 0.85, H * 0.9, 0, W * 0.85, H * 0.9, W * 0.75);
+      g2.addColorStop(0, 'rgba(251,191,36,0.07)');
+      g2.addColorStop(1, 'rgba(251,191,36,0)');
+
+      bgCache = { base, g1, g2 };
+    }
+    ctx.fillStyle = bgCache.base;
+    ctx.fillRect(-20, -20, W + 40, H + 40);
+    ctx.fillStyle = bgCache.g1;
+    ctx.fillRect(-20, -20, W + 40, H + 40);
+    ctx.fillStyle = bgCache.g2;
+    ctx.fillRect(-20, -20, W + 40, H + 40);
   }
 
   function draw(t) {
@@ -921,8 +1142,7 @@ canvas#board{
     }
 
     ctx.clearRect(-20, -20, W + 40, H + 40);
-    ctx.fillStyle = 'rgba(8,16,12,0.82)';
-    ctx.fillRect(-20, -20, W + 40, H + 40);
+    drawBackground();
 
     drawGrid();
     drawObstacles();
@@ -1226,7 +1446,7 @@ canvas#board{
       btn.className = 'map-card';
       btn.type = 'button';
       btn.innerHTML =
-        '<span class="map-icon">' + m.icon + '</span>' +
+        '<span class="map-icon">' + (ICONS[m.icon] || '') + '</span>' +
         '<span class="map-info"><strong>' + m.name + '</strong>' +
         '<small>' + m.desc + '</small></span>' +
         '<span class="map-best">' + getBest(key) + '</span>';
@@ -1246,20 +1466,23 @@ canvas#board{
     ui.finalScore.textContent = G.score;
     ui.finalBest.textContent = G.best;
     ui.overTitle.textContent = G.score > 0 ? 'Fim de jogo' : 'Que pena!';
-    ui.overMsg.textContent = (G.score > 0 && G.score >= G.best)
-      ? '🏆 Novo recorde nesse mapa!'
+    ui.overMsg.textContent = G.newRecord
+      ? 'Novo recorde nesse mapa!'
       : 'Tente novamente!';
     showScreen('over');
+    if (G.newRecord) setTimeout(() => Sfx.record(), 750);
   }
 
   function togglePause() {
     if (G.status === 'playing') {
       G.status = 'paused';
+      Sfx.pause();
       setPlayButton();
       showScreen('pause');
     } else if (G.status === 'paused') {
       G.status = 'playing';
       G.last = performance.now();
+      Sfx.click();
       setPlayButton();
       hideOverlay();
     }
@@ -1294,6 +1517,17 @@ canvas#board{
     }
   }
 
+  function refreshSoundButton() {
+    ui.btnSound.innerHTML = Sound.muted ? SOUND_OFF_ICON : SOUND_ON_ICON;
+    ui.btnSound.classList.toggle('muted', Sound.muted);
+    ui.btnSound.setAttribute('aria-pressed', Sound.muted ? 'false' : 'true');
+  }
+
+  ui.btnSound.addEventListener('click', () => {
+    Sound.toggle();
+    refreshSoundButton();
+  });
+
   ui.btnPlay.addEventListener('click', primaryAction);
   ui.btnRestart.addEventListener('click', () => startGame(G.mapKey));
   ui.btnMenu.addEventListener('click', showMenu);
@@ -1303,6 +1537,14 @@ canvas#board{
   $('btnMenuOver').addEventListener('click', showMenu);
   $('btnHelp').addEventListener('click', openHelp);
   $('btnCloseHelp').addEventListener('click', closeHelp);
+
+  document.addEventListener('pointerdown', e => {
+    if (e.target.closest('.btn, .map-card, .dpad button')) Sfx.click();
+  }, { passive: true });
+
+  ['pointerdown', 'touchstart', 'keydown'].forEach(ev =>
+    window.addEventListener(ev, () => Sound.unlock(), { once: true, passive: true })
+  );
 
   window.addEventListener('keydown', e => {
     const key = e.key;
@@ -1315,6 +1557,7 @@ canvas#board{
 
     if (key === ' ' || key === 'p' || key === 'P') togglePause();
     if (key === 'r' || key === 'R') { if (G.status !== 'menu') startGame(G.mapKey); }
+    if (key === 'm' || key === 'M') { Sound.toggle(); refreshSoundButton(); }
     if (key === 'Escape') {
       if (!ui.helpModal.classList.contains('hidden')) closeHelp();
       else showMenu();
@@ -1348,6 +1591,7 @@ canvas#board{
   }, { passive: true });
 
   G.best = getBest('portais');
+  refreshSoundButton();
   updateHUD();
   renderMenu();
   setPlayButton();
