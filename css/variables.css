@@ -1,0 +1,18 @@
+:root{
+  --accent:#4ade80;
+  --accent-2:#fbbf24;
+  --gold:#f59e0b;
+  --danger:#ef4444;
+  --purple:#a855f7;
+  --text:#faf5eb;
+  --muted:#a8a29e;
+  --bg:#0a1410;
+  --glass:rgba(255,237,213,.05);
+  --glass-border:rgba(255,237,213,.1);
+  --radius-lg:22px;
+  --radius-md:16px;
+  --radius-sm:12px;
+  --font-display:'Bricolage Grotesque',sans-serif;
+  --font-body:'Outfit',system-ui,sans-serif;
+  --font-mono:'JetBrains Mono',monospace;
+}
