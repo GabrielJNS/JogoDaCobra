@@ -1,4 +1,3 @@
-
 export const COLS = 20;
 export const ROWS = 20;
 export const CELL = 24;
@@ -61,10 +60,7 @@ export const SKINS = {
 };
 
 export const ICONS = {
-  portal:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M16 4.5a11.5 11.5 0 1 1-8.15 3.35"/><path d="M16 10.5a5.5 5.5 0 1 1-3.9 1.65"/><circle cx="16" cy="16" r="1.9" fill="currentColor" stroke="none"/></svg>',
   leaf:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M25.5 6.5C13 6.5 6.5 13 6.5 25.5c12.5 0 19-6.5 19-19z"/><path d="M6.5 25.5C11 20.5 16 15.5 22 11.5"/></svg>',
-  rock:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><path d="M6.5 23.5 9 12.5 17.5 7l8 5.5-1.5 11z"/><path d="M9 12.5 15.5 17l10-4.5"/></svg>',
-  mushroom:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"><path d="M4 17.5C4 10.6 9.4 6 16 6s12 4.6 12 11.5z"/><path d="M12 17.5v6.5a4 4 0 0 0 8 0v-6.5"/></svg>',
   dice:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"><rect x="5" y="5" width="22" height="22" rx="4"/><circle cx="11" cy="11" r="1.6" fill="currentColor"/><circle cx="21" cy="11" r="1.6" fill="currentColor"/><circle cx="16" cy="16" r="1.6" fill="currentColor"/><circle cx="11" cy="21" r="1.6" fill="currentColor"/><circle cx="21" cy="21" r="1.6" fill="currentColor"/></svg>'
 };
 
@@ -76,76 +72,9 @@ export const MAPS = {
     desc:'Sem obstáculos. Corra à vontade.',
     wrapEnabled:true, layout:EMPTY_MAP
   },
-  portais: {
-    name:'Portais', icon:'portal',
-    desc:'Paredes com buracos que se conectam.',
-    wrapEnabled:false,
-    layout:[
-      '#########OO#########',
-      '#..................#','#..................#','#..................#',
-      '#..................#','#..................#','#..................#',
-      '#..................#','#..................#',
-      'O..................O','O..................O',
-      '#..................#','#..................#','#..................#',
-      '#..................#','#..................#','#..................#',
-      '#..................#','#..................#',
-      '#########OO#########'
-    ],
-    portals:{
-      '9,0':{x:9,y:19},'10,0':{x:10,y:19},
-      '9,19':{x:9,y:0},'10,19':{x:10,y:0},
-      '0,9':{x:19,y:9},'0,10':{x:19,y:10},
-      '19,9':{x:0,y:9},'19,10':{x:0,y:10}
-    }
-  },
-  obstaculos: {
-    name:'Obstáculos', icon:'rock',
-    desc:'Blocos espalhados pelo campo.',
-    wrapEnabled:true,
-    layout:[
-      '....................','....................',
-      '....####....####....','....#..........#....','....#..........#....',
-      '....................','....................',
-      '..###..........###..','..###..........###..',
-      '....................','....................','....................',
-      '..###..........###..','..###..........###..',
-      '....................','....................',
-      '....#..........#....','....#..........#....',
-      '....####....####....','....................'
-    ]
-  },
-  labirinto: {
-    name:'Labirinto', icon:'mushroom',
-    desc:'Pilares por toda parte. Cuidado!',
-    wrapEnabled:true,
-    layout:[
-      '....................','..####..####..####..','....................',
-      '..#....#....#....#..','..#....#....#....#..','....................',
-      '..####..####..####..','....................',
-      '..#....#....#....#..','..#....#....#....#..','....................',
-      '....................',
-      '..#....#....#....#..','..#....#....#....#..','....................',
-      '..####..####..####..','....................',
-      '..#....#....#....#..','..#....#....#....#..','....................'
-    ]
-  },
-  cruz: {
-    name:'A Cruz', icon:'rock',
-    desc:'Quatro braços e um centro perigoso.',
-    wrapEnabled:true,
-    layout:[
-      '....................','....................','....................',
-      '.........####.......','.........####.......','.........####.......',
-      '.....############...','.....############...','.....############...',
-      '.....############...','.....############...','.....############...',
-      '.........####.......','.........####.......','.........####.......',
-      '....................','....................','....................',
-      '....................','....................'
-    ]
-  },
   aleatorio: {
     name:'Aleatório', icon:'dice',
-    desc:'Um mapa novo a cada partida.',
+    desc:'Pedras aleatórias leves. Novo a cada partida.',
     wrapEnabled:true, layout:EMPTY_MAP, random:true
   }
 };
